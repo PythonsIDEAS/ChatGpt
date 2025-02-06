@@ -1,0 +1,186 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8; /* Light mode background */
+  color: #333; /* Light mode text color */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 60%;
+  margin: auto;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: #f8f8f8; /* Light mode background */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative; /* For positioning the toggle button */
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Dark Mode Styles */
+.chat-container.dark-mode {
+  background: #1e1e1e; /* Dark mode background */
+  color: #f8f8f8; /* Dark mode text color */
+  border-color: #444; /* Dark mode border color */
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: white; /* Light mode chat box */
+  transition: background-color 0.3s;
+}
+
+.chat-container.dark-mode .chat-box {
+  background: #2d2d2d; /* Dark mode chat box */
+}
+
+/* Scrollbar Styling */
+.chat-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.chat-container.dark-mode .chat-box::-webkit-scrollbar-track {
+  background: #444;
+}
+
+.chat-container.dark-mode .chat-box::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+/* Message Bubbles */
+.message {
+  max-width: 60%;
+  padding: 12px 18px;
+  margin: 8px;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* User (Right Side, Blue Bubble) */
+.user {
+  align-self: flex-end;
+  background: #007bff; /* User message background */
+  color: white;
+  border-top-right-radius: 0px;
+}
+
+/* Bot (Left Side, Gray Bubble) */
+.bot {
+  align-self: flex-start;
+  background: #e0e0e0; /* Bot message background */
+  color: black;
+  border-top-left-radius: 0px;
+}
+
+/* Chat Input Section */
+.input-box {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #ddd;
+  background: white; /* Light mode input box */
+  transition: background-color 0.3s;
+}
+
+.chat-container.dark-mode .input-box {
+  background: #2d2d2d; /* Dark mode input box */
+}
+
+/* Input Field */
+input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background: white; /* Light mode input field */
+  color: #333; /* Light mode input text */
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.chat-container.dark-mode input {
+  background: #444; /* Dark mode input field */
+  color: #f8f8f8; /* Dark mode input text */
+  border: 1px solid #666; /* Dark mode input border */
+}
+
+/* Send Button */
+button {
+  padding: 12px 20px;
+  margin-left: 10px;
+  border: none;
+  background: #007bff; /* Button background */
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+  background: #0056b3; /* Button hover background */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Dark Mode Button */
+.chat-container.dark-mode button {
+  background: #0056b3; /* Dark mode button background */
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #007bff; /* Toggle button color */
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.chat-container.dark-mode .dark-mode-toggle {
+  color: #f8f8f8; /* Dark mode toggle button color */
+}
+
+/* Split Text Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive for Smaller Screens */
+@media (max-width: 900px) {
+  .chat-container {
+    width: 90%;
+  }
+  .message {
+    max-width: 75%;
+  }
+}
