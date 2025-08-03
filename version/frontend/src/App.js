@@ -1,5 +1,6 @@
+/* global puter */
 import React, { useState, useEffect, useRef } from "react";
-import { SplitText } from "./SplitText"; // Import the SplitText component
+import { SplitText } from "./SplitText";
 import "./App.css";
 
 export default function App() {
@@ -8,7 +9,7 @@ export default function App() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false); // Dark mode state
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const chatBoxRef = useRef(null);
 
   useEffect(() => {
@@ -25,19 +26,25 @@ export default function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://192.168.8.24:5000/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
+      const response = await puter.ai.chat(input, {
+        model: "gpt-4.1-nano",
+        stream: true
       });
 
-      const data = await response.json();
-      if (data.response) {
-        const botReply = { text: data.response, sender: "bot" };
-        setMessages((prevMessages) => [...prevMessages, botReply]);
+      let fullResponse = "";
+      for await (const part of response) {
+        fullResponse += part?.text || "";
+        setMessages(prevMessages => {
+          const withoutLastBot = prevMessages.filter((msg, idx) => 
+            !(msg.sender === "bot" && idx === prevMessages.length - 1)
+          );
+          return [...withoutLastBot, { text: fullResponse, sender: "bot" }];
+        });
       }
     } catch (error) {
       console.error("Error:", error);
+      const errorMessage = { text: "Sorry, I encountered an error. Please try again.", sender: "bot" };
+      setMessages(prevMessages => [...prevMessages, errorMessage]);
     } finally {
       setIsLoading(false);
     }
